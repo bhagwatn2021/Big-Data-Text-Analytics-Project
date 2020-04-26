@@ -1,12 +1,16 @@
 #install and open libraries
+install.packages("devtools")
 install.packages("readr")
 install.packages("wordcloud")
 install.packages("corpus")
 install.packages("tm")
+install.packages("syuzhet")
 library(readr)
 library(wordcloud)
 library(corpus)
 library(tm)
+library(syuzhet)
+
 
 #load the text into a data frame
 text <- read_lines("TwentyThousandLeagues.txt")
@@ -108,4 +112,32 @@ tdm
 inspect(tdm)
 str(tdm)
 
+#create a dendrogram
+distMatrix <- dist(tdm)
+dendrogram <- hclust(distMatrix,method="ward.D2")
+plot(dendrogram)
+
+#sort frequent terms
+stoptf <- sort(stoptf,decreasing = TRUE)
+stoptf
+
+#create wordcloud
+colpal <- brewer.pal(9,"BuGn")
+wordcloud(words = names(stoptf),freq=stoptf,min.freq=10,random.order=F,colors=colpal)
+
+#find column frequencies
+coltf <- colSums(as.matrix(dtm))
+coltf
+#order by frqequencies in descending order
+order <- order(coltf,decreasing=TRUE)
+
+#find the most and least frequent terms
+coltf[head(order)]
+coltf[tail(order)]
+
+#sentiment analysis
+textdfcontent <- as.data.frame(textdf$text)
+textdfcontent
+
+sentiment <- get_nrc_sentiment(textdfcontent)
 
