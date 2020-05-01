@@ -2,6 +2,7 @@
 install.packages("devtools")
 install.packages("readr")
 install.packages("wordcloud")
+install.packages("quanteda")
 install.packages("corpus")
 install.packages("tm")
 install.packages("syuzhet")
@@ -10,7 +11,7 @@ library(wordcloud)
 library(corpus)
 library(tm)
 library(syuzhet)
-
+library(quanteda)
 
 #load the text into a data frame
 text <- read_lines("TwentyThousandLeagues.txt")
@@ -134,6 +135,14 @@ order <- order(coltf,decreasing=TRUE)
 #find the most and least frequent terms
 coltf[head(order)]
 coltf[tail(order)]
+
+#tokenization
+tokens <- tokens(textCorpus$content)
+tokens
+
+#construct a dfm of the text
+dfm <- dfm(tokens,toLower=TRUE)
+dfm
 
 #sentiment analysis
 textdfcontent <- as.data.frame(textdf$text)
