@@ -14,7 +14,7 @@ library(syuzhet)
 library(quanteda)
 
 #load the text into a data frame
-text <- read_lines("TwentyThousandLeagues.txt")
+text <- read_lines("text/TwentyThousandLeagues.txt")
 textdf <- data.frame(text)
 
 # Create VCorpus of the text and inspect it
