@@ -129,6 +129,7 @@ wordcloud(words = names(stoptf),freq=stoptf,min.freq=10,random.order=F,colors=co
 #find column frequencies
 coltf <- colSums(as.matrix(dtm))
 coltf
+
 #order by frqequencies in descending order
 order <- order(coltf,decreasing=TRUE)
 
@@ -145,8 +146,31 @@ dfm <- dfm(tokens,toLower=TRUE)
 dfm
 
 #sentiment analysis
-textdfcontent <- as.data.frame(textdf$text)
+textdfcontent <- as.data.frame(textCorpus1$content)
 textdfcontent
 
-sentiment <- get_nrc_sentiment(textdfcontent)
+sentiment <- get_nrc_sentiment(textCorpus1$content)
+sentiment
+
+#analysis of sentiments, shows how many sentiments
+#in a given sentence and how many of each type of sentiment
+numSentiments <- rowSums(sentiment)
+numSentiments
+
+sentimentCount <- colSums(sentiment)
+sentimentCount
+
+#text weighing of dfm
+weighteddfm <- docfreq(dfm)
+weighteddfm
+
+weights <- dfm_weight(dfm)
+weights
+
+tfidf <- dfm_tfidf(dfm,scheme_tf="count",scheme_df="inverse")
+tfidf
+
+
+
+
 
