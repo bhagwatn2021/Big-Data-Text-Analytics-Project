@@ -171,6 +171,9 @@ tfidf <- dfm_tfidf(dfm,scheme_tf="count",scheme_df="inverse")
 tfidf
 
 
-
-
-
+#TODO: 
+#look into results for text weighing to finish parts a and c (Neel)
+#parts e, f, and g (Andrew and Fleu)
+#parts b and d (Eptisam)
+#push your code to git and remember to pull the repo before changing anything! (everyone)
+#put your resuts in the report (everyone)
