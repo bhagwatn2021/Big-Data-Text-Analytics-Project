@@ -6,12 +6,16 @@ install.packages("quanteda")
 install.packages("corpus")
 install.packages("tm")
 install.packages("syuzhet")
+install.packages("zipfR")
+
 library(readr)
 library(wordcloud)
 library(corpus)
 library(tm)
 library(syuzhet)
 library(quanteda)
+library(zipfR)
+
 
 #load the text into a data frame
 text <- read_lines("text/TwentyThousandLeagues.txt")
@@ -168,6 +172,31 @@ weights
 
 tfidf <- dfm_tfidf(dfm,scheme_tf="count",scheme_df="inverse")
 tfidf
+
+
+# E - zipfr
+
+# prepares the info for and create the frequency spectrum (spc)
+testMattdm <- as.matrix(tdm)
+tabMattdm <- as.matrix(table(testMattdm))
+str(tabMattdm)
+
+tabMattdm.df <- as.data.frame(tabMattdm)
+tabMattdm.df
+write.table(tabMattdm.df, file = "testTab.txt", sep = "\t",
+            row.names = TRUE, col.names = FALSE)
+tstTab <- read.delim("testTab.txt", header = FALSE, sep = "\t")
+colnames(tstTab)[1:2] <-c("m","Vm")
+write.table(tstTab, file = "test2Tab.txt", sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+# create spc
+freq.spc <- read.spc("test2Tab.txt")
+
+## analysis of spc 
+# summary of the spc
+summary(freq.spc)
+
+#
 
 
 #TODO: 
