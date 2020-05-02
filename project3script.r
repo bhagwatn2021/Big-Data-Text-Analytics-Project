@@ -196,7 +196,27 @@ freq.spc <- read.spc("test2Tab.txt")
 # summary of the spc
 summary(freq.spc)
 
-#
+# sample size
+N(freq.spc)
+
+# vocabulary size
+V(freq.spc)
+
+# Num of types per freq
+Vm(freq.spc, 1)
+Vm(freq.spc, 1:5)
+
+# measure of productivity (num of hapaa legomena/ sample size)
+Vm(freq.spc, 1)/ N(freq.spc)
+
+# plot of the spc
+plot(freq.spc)
+plot(freq.spc, log ="x")
+
+# scatterplot of the spc
+with(freq.spc, plot(m, Vm, main="Frequency Spectrum"))
+
+
 
 
 #TODO: 
