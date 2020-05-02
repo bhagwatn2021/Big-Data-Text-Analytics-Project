@@ -86,9 +86,8 @@ inspect(dtm)
 str(dtm)
 
 #find frequent terms
-freqTerms <- findFreqTerms(dtm,lowfreq=25)
+freqTerms <- findFreqTerms(dtm,lowfreq=100)
 freqTerms
-
 
 #find words associated with others
 captainAssoc <- findAssocs(dtm,"ship",0.1)
