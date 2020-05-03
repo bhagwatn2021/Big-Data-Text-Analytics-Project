@@ -7,6 +7,9 @@ install.packages("corpus")
 install.packages("tm")
 install.packages("syuzhet")
 install.packages("zipfR")
+install.packages ("ngram")
+install.packages("knitr")
+
 
 library(readr)
 library(wordcloud)
@@ -15,7 +18,8 @@ library(tm)
 library(syuzhet)
 library(quanteda)
 library(zipfR)
-
+library(ngram)
+library(knitr)
 
 #load the text into a data frame
 text <- read_lines("text/TwentyThousandLeagues.txt")
@@ -216,8 +220,42 @@ plot(freq.spc, log ="x")
 # scatterplot of the spc
 with(freq.spc, plot(m, Vm, main="Frequency Spectrum"))
 
+# F - NGram
 
+# prepares the text for ngrams
+sens <- read_lines("sampleSen.txt")
+sens.df <- data.frame(sens)
+sens.new <- vector()
 
+for(i in sens) {
+  senStr <- preprocess(i, case = "lower", remove.punct = TRUE)
+  senStr
+  sens.new <- c(sens.new, senStr)
+}
+sens.new
+
+sens.size6 <- character(0)
+for(j in sens.new) {
+  sen.split <- strsplit(j, " ")[[1]]
+  for(word in sen.split) {
+    if (nchar(word) >= 7) {
+      sens.size6 <- paste(sens.size6, word, sep = " ")
+    }
+  }
+}
+sens.size6
+
+# Creates bigrams of all words in the 10
+# sentences longer than 6 char long
+sen2.ng <- ngram(sens.size6, n=2)
+sen2.ng
+print(sen2.ng, output="full")
+
+# Creates trigrams of all words in the 10
+# sentences longer than 6 char long
+sen3.ng <- ngram(sens.size6, n=3)
+sen3.ng
+print(sen3.ng, output="full")
 
 #TODO: 
 #look into results for text weighing to finish parts a and c (Neel)
