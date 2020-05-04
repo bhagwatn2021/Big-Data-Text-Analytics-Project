@@ -12,7 +12,12 @@ install.packages("knitr")
 install.packages("RColorBrewer")
 install.packages("NLP")
 install.packages("tokenizers")
-
+install.packages("tidytext")
+install.packages("corpustools")
+install.packages("readtext")
+install.packages("stringi")
+install.packages("dplyr")
+install.packages("Matrix")
 
 library(readr)
 library(wordcloud)
@@ -20,11 +25,16 @@ library(corpus)
 library(tm)
 library(syuzhet)
 library(quanteda)
+library(stringi)
+library(tidytext)
+library(corpustools)
 library(zipfR)
 library(ngram)
 library(knitr)
 library(tokenizers)
 library(stringr)
+library(dplyr)
+library(Matrix)
 
 
 #load the text into a data frame
@@ -331,6 +341,55 @@ head(get.phrasetable(sen2.ng))
 
 # summarizing n3
 head(get.phrasetable(sen3.ng))
+
+#part g
+# tidytext: Each variable must have its own column, Each observation must have its own row, Each value must have its own cell 
+
+# Import data document using read_lines 
+dataDoc <- toString(read_lines("TwentyThousandLeagues.txt", skip = 0, n = -1L, ))
+rt <- read_lines("text/*.txt",docvarsfrom="filepaths")
+rt
+# -----Stringi-----
+# Transform to lower case 
+dataDoc <- stri_trans_tolower(dataDoc)
+# Remove tags 
+dataDoc <- stri_replace_all(dataDoc,"",regex = "<.*?>")
+# Strip surrounding white space 
+dataDoc <- stri_trim(dataDoc)
+dataDoc
+# ----Quanteda----
+# Tokenization
+toks <- quanteda::tokens(dataDoc)
+# Convert to lower case 
+toks <- tokens_tolower(toks)
+# Remove stopwords 
+sw <- stopwords("english")
+head(sw)
+tokens_remove(toks,sw)
+
+fulltext <- corpus(rt)                              
+dtm <- dfm(fulltext, tolower = TRUE, stem = TRUE,remove_punct = TRUE,remove = stopwords("english")) 
+dtm@docvars
+dtm@Dimnames
+# Document Frequency
+doc_freq <- docfreq(dtm) 
+doc_freq
+hist(doc_freq)
+# Terms with frequency >= 6
+dtm6 <- dtm[, doc_freq >= 6]
+# TF-IDF
+dtm1 <- dfm_weight(dtm, "tfidf")  
+dfm_tfidf(dtm)
+dataDoc
+# Extract words 
+wrds <- dtm@Dimnames
+wrds$features
+str(wrds$features)
+wrds$features 
+# Get nrc values 
+get_nrc_values(wrds$features)
+# Explore Corpus Term Frequency Characteristics 
+#Zipf_plot(cleanTDM)
 
 #TODO: 
 #look into results for text weighing to finish parts a and c (Neel)
