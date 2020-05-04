@@ -390,11 +390,3 @@ wrds$features
 get_nrc_values(wrds$features)
 # Explore Corpus Term Frequency Characteristics 
 #Zipf_plot(cleanTDM)
-
-#TODO: 
-#look into results for text weighing to finish parts a and c (Neel)
-#look into why findAssocs function returns 0 under 'captain' (Neel)
-#parts e, f, and g (Andrew and Fleu)
-#parts b and d (Eptisam)
-#push your code to git and remember to pull the repo before changing anything! (everyone)
-#put your resuts in the report (everyone)
